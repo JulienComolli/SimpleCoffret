@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const CacheService = require('../service/cache');
+const { cachingTime } = require('../config/config');
 
 const playerSchema = mongoose.Schema({
     id: { type: String, required: true },
@@ -23,10 +24,11 @@ const playerSchema = mongoose.Schema({
 
 const playerModel = mongoose.model("player", playerSchema);
 
+
 class Player {
 
     constructor() {
-        this.cache = new CacheService(15);
+        this.cache = new CacheService(cachingTime);
     }
     
     async getById(playerId) {
@@ -54,6 +56,7 @@ class Player {
         return await player.save();
     }
 
+
     async updateInventory(playerId, values) {
 
         const player = await playerModel.findOne({ id: playerId });
@@ -67,6 +70,7 @@ class Player {
         return await player.save();
     }
 
+
     async updateStats(playerId, values) {
         const player = await playerModel.findOne({ id: playerId });
 
@@ -78,6 +82,7 @@ class Player {
 
         return await player.save();
     }
+
 }
 
 module.exports = Player;

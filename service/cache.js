@@ -1,6 +1,5 @@
 const NodeCache = require('node-cache');
 
-
 class CacheService {
     
     constructor(ttl) {
