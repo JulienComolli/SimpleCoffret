@@ -3,16 +3,15 @@ const Discord = require('discord.js');
 const mongoose = require('mongoose');
 const readDir = require('fs').readdirSync;
 
-// Config
-
-
-
+// Models
+const PM = require('./models/player');
+const PlayerModel = new PM();
 
 const bot = new Discord.Client();
 bot.config = require('./config/config');
 bot.commands = new Discord.Collection();
 bot.cooldowns = new Discord.Collection();
-
+bot.Players = PlayerModel;
 
 
 mongoose.connect(bot.config.mongoDb, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}, 
@@ -45,4 +44,5 @@ readDir('bot/commands').filter(f => f.endsWith('.js'))
 
 
 bot.login(bot.config.token);
+
 
