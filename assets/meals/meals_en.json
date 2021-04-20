@@ -1,0 +1,13 @@
+{
+
+    "adjectives": [
+        "A very tasty",
+        "A wonderful",
+        ["The best", "you'll ever eat !"]
+    ],
+    "mealsNames": [
+        "Baguette",
+        "Porridge",
+        "Steak"
+    ]
+}
