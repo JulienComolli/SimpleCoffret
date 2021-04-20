@@ -1,3 +1,4 @@
+const { defaultPrefix, defaultLang } = require('../../config/config');
 
 module.exports = async (bot, message) => {
 
@@ -5,5 +6,10 @@ module.exports = async (bot, message) => {
     if (message.author.bot) return;
 
 
-    bot.commands.get('cmdExemple').run(bot, message);
+
+    const serv = bot.Servers.getById(message.guild.id);
+    const prefix = serv['prefi'] || defaultPrefix;
+    const lang = serv['lang'] || defaultLang;
+    
+
 };

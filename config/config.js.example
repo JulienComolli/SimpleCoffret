@@ -4,7 +4,10 @@ module.exports = {
     "inviteLink": "",
     "webSite": "https://github.com/JulienComolli/SimpleCoffret",
     "mongoDb" : "",
-    "cachingTime": 60 * 15
+    "cachingTime": 60 * 15,
+    "defaultPrefix": "sc$",
+    "defaultLang": "en",
+
 
     intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "DIRECT_MESSAGE_REACTIONS"]
 }

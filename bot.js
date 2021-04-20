@@ -11,8 +11,9 @@ bot.cooldowns = new Discord.Collection();
 
 // Models
 const PlayerModel = require('./models/player');
+const ServerModel = require('./models/server');
 bot.Players = new PlayerModel();
-
+bot.Servers = new ServerModel();
 
 mongoose.connect(bot.config.mongoDb, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}, 
     (err) => {
