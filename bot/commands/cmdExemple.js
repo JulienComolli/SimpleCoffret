@@ -7,7 +7,7 @@ exports.run = async (bot, message, args, servSettings) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ['sc', 'scmd'],
+    aliases: ['test'],
     cooldown: 2,
     category: "testing"
 };

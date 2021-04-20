@@ -1,1 +1,7 @@
-import nodeCache from 'node-cache';
+const nodeCache = require('node-cache');
+
+
+class Cache {
+    
+
+}
