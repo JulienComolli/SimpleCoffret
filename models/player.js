@@ -19,7 +19,8 @@ const playerSchema = mongoose.Schema({
         emerald: { type: Number, default: 0 },
         ruby: { type: Number, default: 0 },
         topaz: { type: Number, default: 0 }
-    }
+    },
+    joinDate: { type: Number, default: Date.now }
 });
 
 const playerModel = mongoose.model("player", playerSchema);
