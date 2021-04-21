@@ -1,6 +1,6 @@
 module.exports = {
     
-    'profileEmbed': '#b3f4ff',
+    'profileEmbed': '#32a852',
     'default': '#0099ff'
     
 }

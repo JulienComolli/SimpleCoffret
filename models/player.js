@@ -7,7 +7,6 @@ const playerSchema = mongoose.Schema({
     mealsAteToday: { type: Number, default: 0 },
     hasBoughtHisMeal: { type: Boolean, default: false },
     stats: {
-        inventoryValue: { type: Number, default: 0 },
         mealsEaten: { type: Number, default: 0 },
         mealsGifted: { type: Number, default: 0 },
         coffretsOpened: { type: Number, default: 0 },

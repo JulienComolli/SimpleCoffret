@@ -13,4 +13,12 @@ module.exports = (bot) => {
         return new Discord.MessageEmbed();
     }
 
+    bot.inventoryValue = (inventory) => {
+        const rates = require('../assets/rates');
+        return (inventory.diamond * rates.diamond 
+               + inventory.emerald * rates.emerald 
+               + inventory.ruby * rates.ruby 
+               + inventory.topaz * rates.topaz);
+    }
+
 }

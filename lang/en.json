@@ -7,6 +7,19 @@
     "commands" : {
         "cmdexample": {
             "message": "I'm a sample command."
+        },
+        "profile": {
+            "profile_1": "",
+            "profile_2": "'s profile",
+            "noUser_1": "The user",
+            "noUser_2": "never played with the bot yet.",
+            "stats": "Stats",
+            "mealsEaten": "Meals Eaten",
+            "mealsGifted": "Meals Gifted",
+            "coffretOpened": "Coffret Opened",
+            "inventory": "Inventory",
+            "lootsValue": "Loots Value",
+            "moneySpent": "Money Spent"
         }
     }
 }
