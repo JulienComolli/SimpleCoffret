@@ -48,8 +48,9 @@ readDir('bot/commands').filter(f => f.endsWith('.js'))
 
 bot.login(bot.config.token);
 
-/* ------------------------- LOAD EMOS -------------------------*/
 bot.once('ready', () => {
+
+    // Load custom emojis
     const emoTables = require('./assets/emojis');
     const emoKeys = Object.keys(emoTables);
 
@@ -57,4 +58,12 @@ bot.once('ready', () => {
     for(let i = 0; i < emoKeys.length; ++i)
         bot.emo[emoKeys[i]] = bot.emojis.cache.get(emoTables[emoKeys[i]] || emoTables['default']);
     
+    // Load custom colors
+    const colorTables = require('./assets/colors');
+    const colorKeys = Object.keys(colorTables);
+
+    bot.color = {};
+    for(let i = 0; i < emoKeys.length; ++i)
+        bot.color[colorKeys[i]] = colorTables[colorKeys[i]] || colorTables['default'];
+
 });
