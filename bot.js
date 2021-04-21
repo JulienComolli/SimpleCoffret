@@ -42,8 +42,19 @@ readDir('bot/commands').filter(f => f.endsWith('.js'))
 .forEach(c => {
     const fileName = c.split('.')[0];
     const cmd = require(`./bot/commands/${fileName}`);
-    bot.commands.set(fileName, cmd);
+    if(cmd.conf.enabled) bot.commands.set(fileName, cmd);
 });
 
 
 bot.login(bot.config.token);
+
+/* ------------------------- LOAD EMOS -------------------------*/
+bot.once('ready', () => {
+    const emoTables = require('./assets/emojis');
+    const emoKeys = Object.keys(emoTables);
+
+    bot.emo = {};
+    for(let i = 0; i < emoKeys.length; ++i)
+        bot.emo[emoKeys[i]] = bot.emojis.cache.get(emoTables[emoKeys[i]] || emoTables['default']);
+    
+});

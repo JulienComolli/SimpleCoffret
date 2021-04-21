@@ -7,6 +7,7 @@ exports.run = async (bot, message, args, settings) => {
     // Send emojis
     let emoji = message.content.match(/<:.+?:\d+>/g);
     if(emoji) emoji.forEach(e => message.channel.send(`Emoji Id : \`${e}\``));
+    else message.channel.send(`Bot emoji ${args[0]} : ${bot.emo[ args[0] || 'diamond']}.`)
 
 };
 
