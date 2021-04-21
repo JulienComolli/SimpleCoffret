@@ -35,8 +35,8 @@ class Player {
         return this.cache.get(playerId, async () => {
 
             // get db value
-            let player = await playerModel.findOne({ id: playerId });
-            if(!player) player = await playerModel.create({ id: playerId });
+            let player = await playerModel.findOne({ playerId: playerId });
+            if(!player) player = await playerModel.create({ playerId: playerId });
             return player;
 
         });
@@ -45,7 +45,7 @@ class Player {
 
     async update(playerId, values) {
 
-        const player = await playerModel.findOne({ id: playerId });
+        const player = await playerModel.findOne({ playerId: playerId });
 
         if(!player) return;
 
@@ -59,7 +59,7 @@ class Player {
 
     async updateInventory(playerId, values) {
 
-        const player = await playerModel.findOne({ id: playerId });
+        const player = await playerModel.findOne({ playerId: playerId });
 
         if(!player) return;
 
@@ -72,7 +72,7 @@ class Player {
 
 
     async updateStats(playerId, values) {
-        const player = await playerModel.findOne({ id: playerId });
+        const player = await playerModel.findOne({ playerId: playerId });
 
         if(!player) return;
 
