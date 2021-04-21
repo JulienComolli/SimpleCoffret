@@ -1,4 +1,4 @@
-exports.run = async (bot, message, args, servSettings) => {
+exports.run = async (bot, message, args, settings) => {
 
     message.reply(`Here is your test ${message.author.tag}. Your args [${args}].`);
 

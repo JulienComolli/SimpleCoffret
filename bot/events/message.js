@@ -37,31 +37,30 @@ module.exports = async (bot, message) => {
         return message.reply(require(`../../lang/${settings.lang}.json`)['system']['notInDm']);
 
 
-        /*-------------- COOLDOWN SYSTEM --------------*/
-    if(message.author.id != bot.config.ownerId){
-        if (!bot.cooldowns.has(command.name)) { //If the command is not registered in the cd collection
-            const Discord = require('discord.js');
-            bot.cooldowns.set(command.name, new Discord.Collection());
-        }
+    /*-------------- COOLDOWN SYSTEM --------------*/
 
-        const now = Date.now();
-        const timestamps = bot.cooldowns.get(command.name); //GET THE COLLECTION OF THE COMMAND WHERE THE USERS.ID will GO
-        const cooldownAmount = (command.conf.cooldown || 3) * 1000; //IF COMMAND HAS A CD DEFINED OR BY DEFAULT 3 * 1000 Milisec
-
-        if (timestamps.has(message.author.id)) { //IF THE TIMESTAMP.COMMAND COLLECTION HAS THE MESSAGE SENDER
-            //HERE TIMESTAMPS.GET == THE TIME WHERE THE LAST COMMAND WAS SENT SEE BELOW
-            const expirationTime = timestamps.get(message.author.id) + cooldownAmount; 
-
-            if (now < expirationTime) {
-                const timeLeft = (expirationTime - now) / 1000;
-                const langs = require(`../../lang/${settings.lang}.json`);
-                return message.reply(`${langs['system']['slowDown_1']} *${timeLeft}s* ${langs['system']['slowDown_2']} **${command.conf.name}**.`);
-            }
-        }
-        timestamps.set(message.author.id, now); //SET THE TIME WHERE THE COMMAND WAS SENT
-        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount); //DELETE THE TIMESTAMP WHEN CD PASSED
+    if (!bot.cooldowns.has(command.name)) { //If the command is not registered in the cd collection
+        const Discord = require('discord.js');
+        bot.cooldowns.set(command.name, new Discord.Collection());
     }
 
+    const now = Date.now();
+    const timestamps = bot.cooldowns.get(command.name); // Reference to the Command's cooldown collection
+    const cooldownAmount = (command.conf.cooldown || 3) * 1000; // in ms
+
+    if (timestamps.has(message.author.id)) { // if user is on CD
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            const langs = require(`../../lang/${settings.lang}.json`);
+            return message.reply(`${langs['system']['slowDown_1']} *${timeLeft}s* ${langs['system']['slowDown_2']} **${command.conf.name}**.`);
+        }
+    }
+    timestamps.set(message.author.id, now); // Register the last time the command was used
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount); // Clear CD when time is up
+    
+    // Execute the command
     command.run(bot, message, args, settings);
 
 };
