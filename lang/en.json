@@ -5,6 +5,8 @@
         "slowDown_2": "before using again the command"
     },
     "commands" : {
-
+        "cmdexample": {
+            "message": "I'm a sample command."
+        }
     }
 }

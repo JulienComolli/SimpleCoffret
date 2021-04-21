@@ -1,6 +1,8 @@
 exports.run = async (bot, message, args, settings) => {
 
-    message.reply(`Here is your test ${message.author.tag}. Your args [${args}].`);
+    const lang = require(`../../lang/${settings.lang}`)['commands'][this.conf.name];
+
+    message.reply(`Here is your test ${message.author.tag}. Your args [${args}]. ${lang['message']}`);
 
 };
 
