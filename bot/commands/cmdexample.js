@@ -4,6 +4,10 @@ exports.run = async (bot, message, args, settings) => {
 
     message.reply(`Here is your test ${message.author.tag}. Your args [${args}]. ${lang['message']}`);
 
+    // Send emojis
+    let emoji = message.content.match(/<:.+?:\d+>/g);
+    if(emoji) emoji.forEach(e => message.channel.send(`Emoji Id : \`${e}\``));
+
 };
 
 exports.conf = {
