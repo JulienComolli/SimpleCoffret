@@ -31,14 +31,19 @@ class Player {
         this.cache = new CacheService(cachingTime);
     }
     
-    async getById(playerId) {
+    /**
+     * @param createIfNot If true init a new player in the DB if he doesn't exist.
+     */
+    async getById(playerId, createIfNot = true) {
         return this.cache.get(playerId, async () => {
 
             // get db value
             let player = await playerModel.findOne({ playerId: playerId });
-            if(!player) player = await playerModel.create({ playerId: playerId });
+            if(!player) {
+                if(createIfNot) return await playerModel.create({ playerId: playerId });
+                else return null;
+            }
             return player;
-
         });
     }
 
