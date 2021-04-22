@@ -11,11 +11,13 @@ class CacheService {
     }
 
     get(key, storeFunction) {
-        const value = this.cache.get(key);
+
+        let value = this.cache.get(key);
         if(value) return value;
         else {
-            this.cache.set(key, storeFunction());
-            return this.cache.get(key);
+            value = storeFunction();
+            if(value) this.cache.set(key, value);
+            return value;
         }
     }
 
