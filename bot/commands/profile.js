@@ -8,11 +8,13 @@ exports.run = async (bot, message, args, settings) => {
 
     let playerData = await bot.Players.getById(player.id, true).catch(
         (err) => { return console.log('\x1b[31m[Error] ' + err.message + '\x1b[0m'); }
-    );;
+    );
    
+    // playerData is undefined when an error with the DB occur : playerData = l.10 return -> undefined
     if(playerData === undefined)
         return message.reply(require(`../../lang/${settings.lang}`)['system']['fatalError']);
 
+    // if the mentioned player isn't registered by the bot
     if(mentioned && !playerData)
         return message.channel.send(`${lang['noUser_1']} **${player.username}** ${lang['noUser_2']}.`);
 
@@ -27,12 +29,9 @@ exports.run = async (bot, message, args, settings) => {
             { name: `\u200B`, value: `:moneybag: ${lang['lootsValue']}  **${bot.inventoryValue(playerData.inventory)}**\n:money_with_wings: ${lang['moneySpent']} **${playerData.stats.moneySpent}**`}
          );
 
-    message.channel.send(embed);
+    return message.channel.send(embed);
 
 };
-
-
-
 
 exports.conf = {
     enabled: true,
