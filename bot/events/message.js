@@ -39,13 +39,13 @@ module.exports = async (bot, message) => {
 
     /*-------------- COOLDOWN SYSTEM --------------*/
 
-    if (!bot.cooldowns.has(command.name)) { //If the command is not registered in the cd collection
+    if (!bot.cooldowns.has(command.conf.name)) { //If the command is not registered in the cd collection
         const Discord = require('discord.js');
-        bot.cooldowns.set(command.name, new Discord.Collection());
+        bot.cooldowns.set(command.conf.name, new Discord.Collection());
     }
 
     const now = Date.now();
-    const timestamps = bot.cooldowns.get(command.name); // Reference to the Command's cooldown collection
+    const timestamps = bot.cooldowns.get(command.conf.name); // Reference to the Command's cooldown collection
     const cooldownAmount = (command.conf.cooldown || 3) * 1000; // in ms
 
     if (timestamps.has(message.author.id)) { // if user is on CD
