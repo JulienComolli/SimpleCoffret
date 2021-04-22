@@ -16,6 +16,11 @@ exports.run = async (bot, message, args, settings) => {
         playerData = await bot.Players.getById(message.author.id);
     }
    
+    // If playerData is null DB communication failed.
+    if(playerData === null) 
+        return message.reply(require(`../../lang/${settings.lang}`)['system']['fatalError']);
+
+
     const embed = bot.createEmbed();
     embed.setAuthor(lang['profile_1'] + player.username + lang['profile_2'], player.avatarURL())
          .setColor(bot.color.profileEmbed)

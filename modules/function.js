@@ -21,4 +21,15 @@ module.exports = (bot) => {
                + inventory.topaz * rates.topaz);
     }
 
+    
+    // Return the date when the next reset will happend. 
+    bot.getNextReset = () => {
+        
+        const RH = require('../assets/resetHour');
+
+        const d = new Date();
+        let day = (d.getHours() <= RH) ? d.getDate() : d.getDate()+1;
+        return Date.UTC(d.getFullYear(), d.getMonth(), day, RH);
+    }
+
 }

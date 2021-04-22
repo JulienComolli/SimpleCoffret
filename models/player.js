@@ -4,6 +4,7 @@ const { cachingTime } = require('../config/config');
 
 const playerSchema = mongoose.Schema({
     playerId: { type: String, required: true },
+    claimedCoffretToday: { type: Number, default: 0 },
     mealsAteToday: { type: Number, default: 0 },
     hasBoughtHisMeal: { type: Boolean, default: false },
     nextReset: { type: Number, default: 0 },
@@ -34,22 +35,48 @@ class Player {
     
     /**
      * @param createIfNot If true init a new player in the DB if he doesn't exist.
+     * @returns null if an error occured else return the player
      */
     async getById(playerId, createIfNot = true) {
         return this.cache.get(playerId, async () => {
 
-            // get db value
-            let player = await playerModel.findOne({ playerId: playerId });
-            if(!player) {
-                if(createIfNot) return await playerModel.create({ playerId: playerId });
-                else return null;
+            // Get player from DB. FindOne return null if no player registered.
+            let player = await playerModel.findOne({ playerId: playerId })
+            .catch((err) => { 
+                console.log('\x1b[31m[Error] ' + err.message + '\x1b[0m'); 
+                return undefined; 
+            });
+            
+            // If player was not found
+            if(player === null) {
+                if(createIfNot) {
+                    return await playerModel.create({ playerId: playerId })
+                        .catch((err) => { 
+                            console.log('\x1b[31m[Error] ' + err.message + '\x1b[0m'); 
+                            return null; 
+                        });
+                }
             }
-            return player;
+            
+            return player || null;
         });
     }
 
+    async update(playerDoc, values) {
 
-    async update(playerId, values) {
+        if(!playerDoc) return null;
+
+        for(const val in values)
+            playerDoc[val] = values[val];
+        
+
+        await playerDoc.save();
+        this.cache.set(playerDoc.playerId, playerDoc);
+
+        return playerDoc;
+    }
+
+    async updateById(playerId, values) {
 
         const player = await playerModel.findOne({ playerId: playerId });
 

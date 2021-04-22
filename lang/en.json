@@ -2,7 +2,8 @@
     "system" : {
         "notInDm": "This command can't be executed in direct message.",
         "slowDown_1": "wait ",
-        "slowDown_2": "before using again the command"
+        "slowDown_2": "before using again the command",
+        "fatalError": "a fatal error occured."
     },
     "commands" : {
         "cmdexample": {

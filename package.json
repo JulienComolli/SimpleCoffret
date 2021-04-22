@@ -24,5 +24,8 @@
     "discord.js": "^12.5.3",
     "mongoose": "^5.12.4",
     "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
