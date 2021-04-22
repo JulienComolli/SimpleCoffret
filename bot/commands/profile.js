@@ -1,7 +1,7 @@
 exports.run = async (bot, message, args, settings) => {
 
     const lang = require(`../../lang/${settings.lang}`)['commands'][this.conf.name];
-    console.log(lang);
+
     // Init playerData var and retrieve mentionned user if there is one
     let playerData, 
         player = message.mentions.users.first();
