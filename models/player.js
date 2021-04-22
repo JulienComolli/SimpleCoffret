@@ -6,6 +6,7 @@ const playerSchema = mongoose.Schema({
     playerId: { type: String, required: true },
     mealsAteToday: { type: Number, default: 0 },
     hasBoughtHisMeal: { type: Boolean, default: false },
+    nextReset: { type: Number, default: null },
     stats: {
         mealsEaten: { type: Number, default: 0 },
         mealsGifted: { type: Number, default: 0 },
@@ -58,7 +59,10 @@ class Player {
             player[val] = values[val];
         }
 
-        return await player.save();
+        const updatedPlayer = await player.save();
+        this.cache.set(playerId, updatedPlayer);
+
+        return updatedPlayer;
     }
 
 
@@ -72,7 +76,10 @@ class Player {
             player.inventory[val] = values[val];
         }
 
-        return await player.save();
+        const updatedPlayer = await player.save();
+        this.cache.set(playerId, updatedPlayer);
+
+        return updatedPlayer;
     }
 
 
@@ -85,7 +92,10 @@ class Player {
             player.stats[val] = values[val];
         }
 
-        return await player.save();
+        const updatedPlayer = await player.save();
+        this.cache.set(playerId, updatedPlayer);
+
+        return updatedPlayer;
     }
 
 }

@@ -39,7 +39,10 @@ class Server {
             server[val] = values[val];
         }
 
-        return await server.save();
+        const updatedServer = await server.save();
+        this.cache.set(serverId, updatedServer);
+        
+        return updatedServer;
     }
 
 }

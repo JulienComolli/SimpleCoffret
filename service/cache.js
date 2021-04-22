@@ -20,7 +20,7 @@ class CacheService {
     }
 
     set(key, value) {
-        this.cache.set(key, value);
+        return this.cache.set(key, value);
     }
 
 }
