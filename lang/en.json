@@ -21,6 +21,11 @@
             "inventory": "Inventory",
             "lootsValue": "Loots Value",
             "moneySpent": "Money Spent"
+        },
+        "coffret": {
+            "claim_1": "you just got",
+            "claim_2": " Coffret, see you tomorrow for another one !",
+            "alreadyClaimed" : "you already claimed your coffret, next reset in"
         }
     }
 }

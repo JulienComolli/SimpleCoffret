@@ -65,52 +65,21 @@ class Player {
         return playerDoc;
     }
 
-    async updateById(playerId, values) {
+    async multiUpdate(playerDoc, values, invValues, statsValues) {
+        if(!playerDoc) return null;
 
-        const player = await playerModel.findOne({ playerId: playerId });
+        for(const val in values)
+            playerDoc[val] = values[val];
 
-        if(!player) return;
+        for(const val in invValues)
+            playerDoc.inventory[val] = invValues[val];
+        
+        for(const val in statsValues)
+            playerDoc.stats[val] = statsValues[val];
 
-        for(const val in values) {
-            player[val] = values[val];
-        }
-
-        const updatedPlayer = await player.save();
-        this.cache.set(playerId, updatedPlayer);
-
-        return updatedPlayer;
-    }
-
-
-    async updateInventory(playerId, values) {
-
-        const player = await playerModel.findOne({ playerId: playerId });
-
-        if(!player) return;
-
-        for(const val in values) {
-            player.inventory[val] = values[val];
-        }
-
-        const updatedPlayer = await player.save();
-        this.cache.set(playerId, updatedPlayer);
-
-        return updatedPlayer;
-    }
-
-
-    async updateStats(playerId, values) {
-        const player = await playerModel.findOne({ playerId: playerId });
-
-        if(!player) return;
-
-        for(const val in values) {
-            player.stats[val] = values[val];
-        }
-
-        const updatedPlayer = await player.save();
-        this.cache.set(playerId, updatedPlayer);
-
+        const updatedPlayer = await playerDoc.save();
+        this.cache.set(playerDoc.id, updatedPlayer);
+    
         return updatedPlayer;
     }
 
