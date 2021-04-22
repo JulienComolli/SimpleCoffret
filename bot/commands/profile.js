@@ -3,22 +3,18 @@ exports.run = async (bot, message, args, settings) => {
     const lang = require(`../../lang/${settings.lang}`)['commands'][this.conf.name];
 
     // Init playerData var and retrieve mentionned user if there is one
-    let playerData, 
-        player = message.mentions.users.first();
-    if(player) {
-        playerData = await bot.Players.getById(message.mentions.users.first().id, false);
-        if(!playerData)
-            // If the mentioned isn't registered by the bot
-            return message.channel.send(`${lang['noUser_1']} **${player.username}** ${lang['noUser_2']}.`);
-    }
-    else {
-        player = message.author;
-        playerData = await bot.Players.getById(message.author.id);
-    }
+    let mentioned = message.mentions.users.first() != undefined;
+    let player = message.mentions.users.first() || message.author;
+
+    let playerData = await bot.Players.getById(player.id, true).catch(
+        (err) => { return console.log('\x1b[31m[Error] ' + err.message + '\x1b[0m'); }
+    );;
    
-    // If playerData is null DB communication failed.
-    if(playerData === null) 
+    if(playerData === undefined)
         return message.reply(require(`../../lang/${settings.lang}`)['system']['fatalError']);
+
+    if(mentioned && !playerData)
+        return message.channel.send(`${lang['noUser_1']} **${player.username}** ${lang['noUser_2']}.`);
 
 
     const embed = bot.createEmbed();
@@ -34,6 +30,9 @@ exports.run = async (bot, message, args, settings) => {
     message.channel.send(embed);
 
 };
+
+
+
 
 exports.conf = {
     enabled: true,

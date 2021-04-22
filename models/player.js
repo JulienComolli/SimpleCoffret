@@ -35,30 +35,19 @@ class Player {
     
     /**
      * @param createIfNot If true init a new player in the DB if he doesn't exist.
-     * @returns null if an error occured else return the player
      */
     async getById(playerId, createIfNot = true) {
-        return this.cache.get(playerId, async () => {
 
-            // Get player from DB. FindOne return null if no player registered.
-            let player = await playerModel.findOne({ playerId: playerId })
-            .catch((err) => { 
-                console.log('\x1b[31m[Error] ' + err.message + '\x1b[0m'); 
-                return undefined; 
-            });
-            
-            // If player was not found
-            if(player === null) {
-                if(createIfNot) {
-                    return await playerModel.create({ playerId: playerId })
-                        .catch((err) => { 
-                            console.log('\x1b[31m[Error] ' + err.message + '\x1b[0m'); 
-                            return null; 
-                        });
-                }
+        return this.cache.get(playerId, async () => {
+            // get db value
+            let player = await playerModel.findOne({ playerId: playerId });
+
+            if(!player) {
+                if(createIfNot) return await playerModel.create({ playerId: playerId });
+                else return null;
             }
-            
-            return player || null;
+
+            return player;
         });
     }
 
