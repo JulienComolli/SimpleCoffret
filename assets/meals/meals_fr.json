@@ -1,0 +1,26 @@
+{
+    "adjectives": [
+        ["Un très goûteux", "Une très goûteuse", "De très goûteux", "De très goûteuses"],
+        ["Un fantastique", "Une fantastique", "De fantastiques", "De fantastiques"],
+        [["Le meilleur", "que vous mangerez de toute votre vie !"],
+         ["La meilleure", "que vous mangerez de toute votre vie !"],
+         ["Les meilleurs", "que vous mangerez de toute votre vie !"],
+         ["Les meilleures", "que vous mangerez de toute votre vie !"]],
+        [["Un très sain", "préparé par nos meilleurs nutritionistes."],
+         ["Une très saine", "préparée par nos meilleurs nutritionistes."],
+         ["De très sains", "préparés par nos meilleurs nutritionistes."],
+         ["De très saines", "préparées par nos meilleurs nutritionistes."]],
+        [["", "fait avec beaucoup d'amour !"],
+         ["", "faite avec beaucoup d'amour !"],
+         ["", "faits avec beaucoup d'amour !"],
+         ["", "faites avec beaucoup d'amour !"]]
+    ],
+    "meals": [
+        ["Baguette", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Baguettes_-_stonesoup.jpg/220px-Baguettes_-_stonesoup.jpg", 1],
+        ["Porridge de Boeuf aux ignames", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Beef_yam_porridge_with_red_and_green_pepper.jpg/220px-Beef_yam_porridge_with_red_and_green_pepper.jpg", 0],
+        ["Entrecôte", "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Ribeye_med_pommes_frites_%284406208324%29.jpg/1280px-Ribeye_med_pommes_frites_%284406208324%29.jpg", 1],
+        ["Pizza", "https://upload.wikimedia.org/wikipedia/commons/1/10/Hot_pizza.jpg", 1],
+        ["Sushis", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/East_West_sushi_01.jpg/1280px-East_West_sushi_01.jpg", 2],
+        ["Hamburger", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/RedDot_Burger.jpg/300px-RedDot_Burger.jpg", 0]
+    ]
+}

@@ -3,8 +3,8 @@ const { defaultPrefix, defaultLang } = require('../../config/config');
 
 module.exports = async (bot, message) => {
 
-    //If author is a bot
-    if (message.author.bot) return;
+    //If author is a bot or the bot is not available
+    if (message.author.bot || !bot.available) return;
 
 
     // Load serv settings if message sent on server
