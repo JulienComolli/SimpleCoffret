@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const CacheService = require('../service/cache');
-const { cachingTime, defaultPrefix, defaultLang } = require('../config/config')
+const { cachingTime, defaultPrefix, defaultLang } = require('../config/config');
 
 const serverModel = mongoose.model('server', 
     mongoose.Schema({

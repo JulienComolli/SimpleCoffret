@@ -13,7 +13,7 @@ module.exports = (bot) => {
         return new Discord.MessageEmbed();
     }
 
-    // Return the date of the next 12AM
+    // Return the value of the inventory
     bot.inventoryValue = (inventory) => {
         const rates = require('../assets/rates');
         return (inventory.diamond * rates.diamond 
