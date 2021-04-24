@@ -6,7 +6,7 @@ exports.run = async (bot, message, args, settings) => {
     let mentioned = message.mentions.users.first() != undefined;
     let player = message.mentions.users.first() || message.author;
 
-    let playerData = await bot.Players.getById(player.id, true).catch(
+    let playerData = await bot.Players.getById(player.id, false).catch(
         (err) => { return console.log('\x1b[31m[Error] ' + err.message + '\x1b[0m'); }
     );
    
