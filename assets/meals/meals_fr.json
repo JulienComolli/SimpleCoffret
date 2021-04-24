@@ -1,5 +1,6 @@
 {
     "adjectives": [
+        ["Un", "Une", "De", "De"],
         ["Un très goûteux", "Une très goûteuse", "De très goûteux", "De très goûteuses"],
         ["Un fantastique", "Une fantastique", "De fantastiques", "De fantastiques"],
         [["Le meilleur", "que vous mangerez de toute votre vie !"],
@@ -21,6 +22,8 @@
         ["Entrecôte", "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Ribeye_med_pommes_frites_%284406208324%29.jpg/1280px-Ribeye_med_pommes_frites_%284406208324%29.jpg", 1],
         ["Pizza", "https://upload.wikimedia.org/wikipedia/commons/1/10/Hot_pizza.jpg", 1],
         ["Sushis", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/East_West_sushi_01.jpg/1280px-East_West_sushi_01.jpg", 2],
-        ["Hamburger", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/RedDot_Burger.jpg/300px-RedDot_Burger.jpg", 0]
+        ["Hamburger", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/RedDot_Burger.jpg/300px-RedDot_Burger.jpg", 0],
+        ["Tarte aux pommes", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/RedDot_Burger.jpg/300px-RedDot_Burger.jpg", 1],
+        ["Glace à la Vanille", "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Ice_cream_with_whipped_cream%2C_chocolate_syrup%2C_and_a_wafer_%28cropped%29.jpg/800px-Ice_cream_with_whipped_cream%2C_chocolate_syrup%2C_and_a_wafer_%28cropped%29.jpg", 1]
     ]
 }

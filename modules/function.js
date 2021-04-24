@@ -68,8 +68,14 @@ module.exports = (bot) => {
     
         if(botData.nextReset < Date.now()) {
             needUpdate = true;
-            adjId = Math.floor((mealsFiles['en'].adjectives.length) * Math.random());
             mealId = Math.floor((mealsFiles['en'].meals.length) * Math.random());
+            adjId = Math.floor((mealsFiles['en'].adjectives.length) * Math.random());
+            // To avoid getting the same adjective or meal two times in a row
+            while (mealId == botData.meal.mealId) 
+                mealId = Math.floor((mealsFiles['en'].meals.length) * Math.random());
+            while(adjId == botData.meal.adjId)
+                adjId = Math.floor((mealsFiles['en'].adjectives.length) * Math.random());
+
             // generate prices
             prices[0] = 1;
             prices[1] = 2;
@@ -109,21 +115,38 @@ module.exports = (bot) => {
         for(c in mealsFiles) {
             formatedMeals[c] = {};
             let meal = mealsFiles[c].meals[mealId];
-            let adj = mealsFiles[c].adjectives[adjId][meal[2]];
-            let mealFormated = [];
+
+            let index;
+            if(mealsFiles[c].adjectives[adjId].length <= meal[2])
+                index = 0;
+            else index = meal[2]
+
+            let adj = mealsFiles[c].adjectives[adjId][index];
+            let mealFormated = {};
     
-            if(Array.isArray(adj)) mealFormated[0] = adj[0] + ((adj[0].length > 0) ? " **": "**") + meal[0] + "** " + adj[1];
-            else mealFormated[0] = adj + " **"+ meal[0] + "**.";
+            if(Array.isArray(adj)) mealFormated.mess = adj[0] + ((adj[0].length > 0) ? " **": "**") + meal[0] + "** " + adj[1];
+            else mealFormated.mess = adj + " **"+ meal[0] + "**.";
             
-            mealFormated[1] = prices;
-            mealFormated[2] = meal[1];
+            mealFormated.prices = prices;
+            mealFormated.img = meal[1];
+            
+            // Get color avg for the embed
+            const Jimp = require('jimp');
+            mealFormated.color = await Jimp.read(mealFormated.img).then(
+                img => {
+                    let rgbObj = Jimp.intToRGBA(
+                        img.resize(1,1)
+                        .getPixelColor(0,0));
+                    return [rgbObj['r'], rgbObj['g'], rgbObj['b']];
+                }
+            )
     
             formatedMeals[c]  = mealFormated;
         }
         
     
         if(needUpdate) 
-            console.log("> Updated meals :",  "[" + (formatedMeals['en'][0]).replace(/\*/g, '') + "]");
+            console.log("> Updated meals :",  "[" + (formatedMeals['en'].mess).replace(/\*/g, '') + "]");
         else
             console.log("> Meals checked, no update needed.");
     

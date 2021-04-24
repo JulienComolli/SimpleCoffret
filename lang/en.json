@@ -26,6 +26,10 @@
             "claim_1": "you just got",
             "claim_2": " Coffret, see you tomorrow for another one !",
             "alreadyClaimed" : "you already claimed your coffret, next reset in"
+        },
+        "todaymeal": {
+            "title": "Today's meal",
+            "toGet": "to get the today's meal."
         }
     }
 }

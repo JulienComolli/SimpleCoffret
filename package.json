@@ -22,6 +22,7 @@
   "homepage": "https://github.com/JulienComolli/SimpleCoffret#readme",
   "dependencies": {
     "discord.js": "^12.5.3",
+    "jimp": "^0.16.1",
     "mongoose": "^5.12.4",
     "node-cache": "^5.1.2"
   },

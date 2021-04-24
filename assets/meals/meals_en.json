@@ -1,17 +1,23 @@
 {
     "adjectives": [
-        ["A very tasty"],
-        ["A wonderful"],
+        ["A", "", "An"],
+        ["A very tasty", "Very tasty"],
+        ["A wonderful", "Wonderful"],
         [["The best", "you'll ever eat !"]],
-        [["A healthy", "prepared by our best nutritionists."]],
-        [["", "made with a lot of love !"]]
+        [["A healthy", "prepared by our best nutritionists."],
+         ["Healthy", "prepared by our best nutritionists."]],
+        [["A", "made with a lot of love !"],
+         ["", "made with a lot of love !"],
+         ["An", "made with a lot of love !"]]
     ],
     "meals": [
         ["Baguette", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Baguettes_-_stonesoup.jpg/220px-Baguettes_-_stonesoup.jpg", 0],
         ["Beef Yam Porridge", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Beef_yam_porridge_with_red_and_green_pepper.jpg/220px-Beef_yam_porridge_with_red_and_green_pepper.jpg", 0],
         ["Ribeye Steak", "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Ribeye_med_pommes_frites_%284406208324%29.jpg/1280px-Ribeye_med_pommes_frites_%284406208324%29.jpg", 0],
         ["Pizza", "https://upload.wikimedia.org/wikipedia/commons/1/10/Hot_pizza.jpg", 0],
-        ["Sushis", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/East_West_sushi_01.jpg/1280px-East_West_sushi_01.jpg", 0],
-        ["Hamburger", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/RedDot_Burger.jpg/300px-RedDot_Burger.jpg", 0]
+        ["Sushis", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/East_West_sushi_01.jpg/1280px-East_West_sushi_01.jpg", 1],
+        ["Hamburger", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/RedDot_Burger.jpg/300px-RedDot_Burger.jpg", 0],
+        ["Apple Pie", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Apple_pie.jpg/1280px-Apple_pie.jpg", 2],
+        ["Vanilla Ice Cream", "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Ice_cream_with_whipped_cream%2C_chocolate_syrup%2C_and_a_wafer_%28cropped%29.jpg/800px-Ice_cream_with_whipped_cream%2C_chocolate_syrup%2C_and_a_wafer_%28cropped%29.jpg", 0]
     ]
 }

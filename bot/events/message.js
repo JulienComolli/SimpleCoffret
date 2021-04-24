@@ -1,4 +1,3 @@
-const { set } = require('mongoose');
 const { defaultPrefix, defaultLang } = require('../../config/config');
 
 module.exports = async (bot, message) => {
@@ -54,7 +53,7 @@ module.exports = async (bot, message) => {
         if (now < expirationTime) {
             const timeLeft = (expirationTime - now) / 1000;
             const langs = require(`../../lang/${settings.lang}.json`);
-            return message.reply(`${langs['system']['slowDown_1']} *${timeLeft}s* ${langs['system']['slowDown_2']} **${command.conf.name}**.`);
+            return message.reply(`${langs['system']['slowDown_1']} \`${timeLeft}s\` ${langs['system']['slowDown_2']} **${command.conf.name}**.`);
         }
     }
     timestamps.set(message.author.id, now); // Register the last time the command was used
