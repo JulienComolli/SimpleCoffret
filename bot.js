@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const readDir = require('fs').readdirSync;
 
 // Constants
-const MEAL_INTERVAL = 500000;
+const MEAL_INTERVAL = 60 * 60 * 1000;
 
 const bot = new Discord.Client();
 bot.config = require('./config/config');
@@ -82,3 +82,4 @@ setTimeout(() => {
     bot.updateBotData();
     updateMealInterval = bot.setInterval(bot.updateBotData, MEAL_INTERVAL);
  }, start);
+bot.updateBotData();
