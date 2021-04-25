@@ -64,7 +64,7 @@ module.exports = (bot) => {
         // To store if the botData in DB need to be updated
         let needUpdate = false;
         // Init variables of the meal
-        let adjId, mealId, prices = [];
+        let adjId, mealId, formatedPrices = [], prices = [];
     
         if(botData.nextReset < Date.now()) {
             needUpdate = true;
@@ -76,22 +76,24 @@ module.exports = (bot) => {
             while(adjId == botData.meal.adjId)
                 adjId = Math.floor((mealsFiles['en'].adjectives.length) * Math.random());
 
-            // generate prices
-            prices[0] = 1;
-            prices[1] = 2;
-            prices[2] = 3;
-            prices[3] = 4;
+            prices = generatePrices(18);
+            formatedPrices = formatPriceArray(prices);
         } else {
+
+
             adjId = botData.meal.adjectiveId;
             mealId = botData.meal.mealId;
             prices[0] = botData.meal.price.diamond;
             prices[1] = botData.meal.price.emerald;
             prices[2] = botData.meal.price.ruby;
             prices[3] = botData.meal.price.topaz;
+            formatedPrices = formatPriceArray(prices);
+
         }
     
         if(needUpdate) {
             // Update botDate doc
+            
             botData.nextReset = bot.getNextReset();
             botData.meal.adjectiveId = adjId;
             botData.meal.mealId = mealId;
@@ -129,7 +131,7 @@ module.exports = (bot) => {
             
             mealFormated.prices = prices;
             mealFormated.img = meal[1];
-            
+            mealFormated.formatedPrices = formatedPrices;
             // Get color avg for the embed
             const Jimp = require('jimp');
             mealFormated.color = await Jimp.read(mealFormated.img).then(
@@ -143,16 +145,84 @@ module.exports = (bot) => {
     
             formatedMeals[c]  = mealFormated;
         }
-        
     
         if(needUpdate) 
-            console.log("> Updated meals :",  "[" + (formatedMeals['en'].mess).replace(/\*/g, '') + "]");
+            console.log("> Updated meals :",  "[" + (formatedMeals['en'].mess).replace(/\*/g, '') + " ] Prices : " 
+            + formatedMeals['en'].prices);
         else
             console.log("> Meals checked, no update needed.");
     
         bot.formatedMeals = formatedMeals;
         bot.available = true;
-    
+        console.log(bot.formatedMeals['en'].formatedPrices);
     }
     
+}
+
+// Take an array of weight and return randomly an int correspond to the weight
+// [70, 5, 25] --> 70% of chance to return 0, 5% to return 1 and 25% to return 2
+const vfw = (arr) => {
+    // total weight
+    let tw = arr.reduce((a, b) => a + b, 0);
+    let random = Math.floor(Math.random() * tw);
+    let tmp = 0;
+    
+    for(let i = 0; i < arr.length; ++i){
+        tmp += arr[i];    
+        if (tmp > random) return i;
+    }
+}
+
+// Random int from an interval
+const rdI = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+// Return an array of int, each int respectively represent the loot of
+const generatePrices = (weight) => {
+    const rates = require('../assets/rates');
+
+        // Generate the number of tries to pick a new lootId
+        const picking = Math.floor(Math.random() * rates.nbLoot)+2;
+    
+        let lootSelected = [];
+        // Pick a random loot id and add it to the lootSelected arr
+        for(let i = 0; i < picking; ++i){
+            let lootToAdd = Math.floor(Math.random() * rates.nbLoot);
+            if(lootSelected.includes(lootToAdd)) continue;
+            lootSelected.push(lootToAdd);
+        }
+        
+        let lootWeightProb = [];
+        // generate weighted prob for each loot
+        for(let i = 0; i < lootSelected.length; ++i)
+            lootWeightProb[i] = Math.floor(Math.random()*100)+1;
+    
+        // Value by index array
+        let res = new Array(rates.nbLoot); for (let i=0; i<rates.nbLoot; ++i) res[i] = 0;
+    
+        // Weight variation for more random
+        weight += rdI(-weight/4,weight/5);
+        // pick a loot to increment with weighted prob
+        while(weight > 0) {
+            let pickedLoot = vfw(lootWeightProb);
+            let lootId = lootSelected[pickedLoot];
+            res[lootId]++;
+            weight -= rates.lootWeight[lootId];
+        }
+
+        return res;
+
+}
+
+// Format price array for easier use
+// [5, 0, 3, 0] --> [['diamond', 5], ['ruby', 3]];
+const formatPriceArray = (arr) => {
+    const rates = require('../assets/rates');
+    let res = [];
+    for(let i = 0; i < arr.length; ++i) {
+        if(arr[i] > 0) res.push([rates.lootIndexes[i], arr[i]])
+    }
+
+    return res;
 }
