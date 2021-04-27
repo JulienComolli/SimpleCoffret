@@ -38,7 +38,7 @@ class Player {
      */
     async getById(playerId, createIfNot = true) {
 
-        return this.cache.get(playerId, async () => {
+        return await this.cache.get(playerId, async () => {
             // get db value
             let player = await playerModel.findOne({ playerId: playerId });
 
