@@ -30,6 +30,10 @@
         "todaymeal": {
             "title": "Today's meal",
             "toGet": "to get the today's meal."
+        },
+        "opencoffret": {
+            "noLeft": "You do not have any coffret left...",
+            "gains": "Gains"
         }
     }
 }
