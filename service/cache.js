@@ -10,12 +10,12 @@ class CacheService {
         });
     }
 
-    get(key, storeFunction) {
+    async get(key, storeFunction) {
 
         let value = this.cache.get(key);
         if(value) return value;
         else {
-            value = storeFunction();
+            value = await storeFunction();
             if(value) this.cache.set(key, value);
             return value;
         }
