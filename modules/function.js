@@ -1,3 +1,5 @@
+const rates = require('../assets/rates');
+
 module.exports = (bot) => {
 
     // Get emoji by name
@@ -15,7 +17,6 @@ module.exports = (bot) => {
 
     // Return the value of the inventory
     bot.inventoryValue = (inventory) => {
-        const rates = require('../assets/rates');
         return (inventory.diamond * rates.diamond 
                + inventory.emerald * rates.emerald 
                + inventory.ruby * rates.ruby 
@@ -76,8 +77,8 @@ module.exports = (bot) => {
             while(adjId == botData.meal.adjId)
                 adjId = Math.floor((mealsFiles['en'].adjectives.length) * Math.random());
 
-            prices = generatePrices(18);
-            formatedPrices = formatPriceArray(prices);
+            prices = genLoots(rates.avgPriceWeight, rates.nbLootWeightTsmPrice);
+            formatedPrices = formatLootArray(prices);
         } else {
 
 
@@ -87,7 +88,7 @@ module.exports = (bot) => {
             prices[1] = botData.meal.price.emerald;
             prices[2] = botData.meal.price.ruby;
             prices[3] = botData.meal.price.topaz;
-            formatedPrices = formatPriceArray(prices);
+            formatedPrices = formatLootArray(prices);
 
         }
     
@@ -154,9 +155,20 @@ module.exports = (bot) => {
     
         bot.formatedMeals = formatedMeals;
         bot.available = true;
-        console.log(bot.formatedMeals['en'].formatedPrices);
     }
     
+    bot.resetPlayerDay = async (playerData) => {
+        return await bot.Players.update(playerData, {
+            claimedCoffretToday: 0,
+            mealsAteToday: 0,
+            hasBoughtHisMeal: false,
+            nextReset: bot.getNextReset()
+        });
+    }
+
+
+    bot.genLoots = genLoots;
+    bot.formatLootArray = formatLootArray;
 }
 
 // Take an array of weight and return randomly an int correspond to the weight
@@ -178,37 +190,41 @@ const rdI = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// Return an array of int, each int respectively represent the loot of
-const generatePrices = (weight) => {
-    const rates = require('../assets/rates');
+/**
+ * 
+ * @param {int} avgWeight the price value of the returned array will be arroudn this value.
+ * @param {Array} nbLootProb the weight prob array of the nb loot
+ * @returns a randomly generated array of integer containing the number of each loot. 
+ * See Rates.lootIndexes to see wich index represent a loot.
+ */
+const genLoots = (avgWeight, nbLootProb) => {
+        let nbLoot = vfw(nbLootProb)+1;
 
-        // Generate the number of tries to pick a new lootId
-        const picking = Math.floor(Math.random() * rates.nbLoot)+2;
-    
-        let lootSelected = [];
+        // init lootIds array
+        let lootIds = new Array(nbLoot); for (let i=0; i<rates.nbLoot; ++i) lootIds[i] = i;
+
         // Pick a random loot id and add it to the lootSelected arr
-        for(let i = 0; i < picking; ++i){
-            let lootToAdd = Math.floor(Math.random() * rates.nbLoot);
-            if(lootSelected.includes(lootToAdd)) continue;
-            lootSelected.push(lootToAdd);
-        }
+        let lootSelected = [];
+        for(let i = 0; i < nbLoot; ++i)
+            lootSelected.push(lootIds.splice(Math.floor(Math.random() * lootIds.length), 1)[0]);
+            
         
         let lootWeightProb = [];
         // generate weighted prob for each loot
-        for(let i = 0; i < lootSelected.length; ++i)
-            lootWeightProb[i] = Math.floor(Math.random()*100)+1;
-    
+        for(let i = 0; i < rates.nbLoot; ++i)
+            if(lootSelected.includes(i)) lootWeightProb[i] = Math.floor(Math.random()*100)+1;
+            else lootWeightProb[i] = 0
+
         // Value by index array
         let res = new Array(rates.nbLoot); for (let i=0; i<rates.nbLoot; ++i) res[i] = 0;
-    
+
         // Weight variation for more random
-        weight += rdI(-weight/4,weight/5);
+        avgWeight += rdI(-avgWeight/4,avgWeight/5);
         // pick a loot to increment with weighted prob
-        while(weight > 0) {
+        while(avgWeight > 0) {
             let pickedLoot = vfw(lootWeightProb);
-            let lootId = lootSelected[pickedLoot];
-            res[lootId]++;
-            weight -= rates.lootWeight[lootId];
+            res[pickedLoot]++;
+            avgWeight -= rates.lootWeight[pickedLoot];
         }
 
         return res;
@@ -217,12 +233,10 @@ const generatePrices = (weight) => {
 
 // Format price array for easier use
 // [5, 0, 3, 0] --> [['diamond', 5], ['ruby', 3]];
-const formatPriceArray = (arr) => {
-    const rates = require('../assets/rates');
+const formatLootArray = (arr) => {
     let res = [];
     for(let i = 0; i < arr.length; ++i) {
         if(arr[i] > 0) res.push([rates.lootIndexes[i], arr[i]])
     }
-
     return res;
 }

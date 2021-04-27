@@ -7,5 +7,9 @@ module.exports = {
     'maxClaim': 1,
     'maxMeal': 3,
     'nbLoot': 4,
-    'lootWeight': [10/10, 7/10, 5/10, 3/10]
+    'avgPriceWeight': 40,
+    'avgLootWeight': 120,
+    'lootWeight': [8.5, 5, 7, 4.2],
+    'nbLootWeightTsmPrice': [17, 60, 18, 5],
+    'nbLootWeightOpening': [10, 27, 48, 15],
 }
